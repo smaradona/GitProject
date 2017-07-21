@@ -9,6 +9,7 @@ import {
 
 
 var Login = require('./Login');
+var AppContainer = require('./AppContainer');
 var AuthService = require('./AuthService');
 
 var GitProject = React.createClass({
@@ -35,9 +36,7 @@ var GitProject = React.createClass({
 
     if(this.state.isLoggedIn){
       return (
-        <View style={styles.container}>
-          <Text style={styles.welcome}>Logged In</Text>
-        </View>
+        <AppContainer />
       );
     }else{
       return (
