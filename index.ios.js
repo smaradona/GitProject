@@ -3,15 +3,36 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
+  ActivityIndicator
 } from 'react-native';
 
 
 var Login = require('./Login');
-var authService = require('./AuthService');
+var AuthService = require('./AuthService');
 
 var GitProject = React.createClass({
+  componentDidMount: function(){
+      AuthService.getAuthInfo((err, authInfo)=> {
+        this.setState({
+          checkingAuth: false,
+          isLoggedIn: authInfo != null
+        })
+      });
+  },
+
   render: function(){
+    if(this.state.checkingAuth){
+        return(
+          <View style={styles.container}>
+            <ActivityIndicator
+              animating={true}
+              size="large"
+              style={styles.loader} />
+          </View>
+        );
+    }
+
     if(this.state.isLoggedIn){
       return (
         <View style={styles.container}>
@@ -29,7 +50,8 @@ var GitProject = React.createClass({
   },
   getInitialState: function(){
     return {
-      isLoggedIn: false
+      isLoggedIn: false,
+      checkingAuth: true
     }
   }
 });
