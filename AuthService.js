@@ -1,5 +1,5 @@
 var buffer = require('buffer');
-var AsyncStorage = requre('react-native').AsyncStorage;
+var AsyncStorage = require('react-native').AsyncStorage;
 
 class AuthService {
   login(creds, cb){

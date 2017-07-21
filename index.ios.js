@@ -34,5 +34,18 @@ var GitProject = React.createClass({
   }
 });
 
+var styles = StyleSheet.create({
+    container: {
+        backgroundColor: '#F5FCFF',
+        flex: 1,
+        paddingTop: 40,
+        alignItems: 'center',
+        padding: 10
+  },
+    welcome: {
+        fontSize: 30,
+        marginTop: 10
+    }
+});
 
 AppRegistry.registerComponent('GitProject', () => GitProject);
