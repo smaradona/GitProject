@@ -28,6 +28,31 @@ class Feed extends Component {
         };
     }
 
+    componentDidMount(){
+        this.fetchFeed();
+    }
+
+    fetchFeed(){
+      require('./AuthService').getAuthInfo((err, authInfo)=> {
+          var url = 'https://api.github.com/users/'
+              + authInfo.user.login
+
+          fetch(url, {
+              headers: authInfo.header
+          })
+          .then((response)=> response.json())
+          .then((responseData)=> {
+              var feedItems =
+              responseData.filter((ev)=>
+                  ev.type == 'PushEvent');
+              this.setState({
+                  dataSource: this.state.dataSource
+                      .cloneWithRows(feedItems)
+              });
+          })
+      });
+    }
+
     renderRow(rowData){
         return <Text style={{
             color: '#333',
