@@ -36,6 +36,7 @@ class Feed extends Component {
       require('./AuthService').getAuthInfo((err, authInfo)=> {
           var url = 'https://api.github.com/users/'
               + authInfo.user.login
+              + '/received_events';
 
           fetch(url, {
               headers: authInfo.header
