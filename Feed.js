@@ -40,7 +40,7 @@ class Feed extends Component {
               headers: authInfo.header
           })
           .then((response)=> response.json())
-          .then(( )=> {
+          .then((responseData)=> {
             console.log('responseData', responseData)
               var feedItems =
               responseData.filter((ev)=>
@@ -57,13 +57,16 @@ class Feed extends Component {
     }
 
     renderRow(rowData){
+      console.log('rowData', rowData)
         return <Text style={{
             color: '#333',
             backgroundColor: '#FFF',
             padding: 20,
             alignSelf: 'center'
         }}>
-            {rowData}
+        {rowData.actor ? rowData.actor.display_login : rowData}
+        {rowData.actor ? rowData.payload.commits[0].message : rowData}
+
         </Text>
     }
 
