@@ -2,8 +2,8 @@ var buffer = require('buffer');
 var AsyncStorage = require('react-native').AsyncStorage;
 var _ = require('lodash');
 
-const authKey = 'auth';
-const userKey = 'user';
+const authKey = 'authKey';
+const userKey = 'userKey';
 
 class AuthService {
   getAuthInfo(cb){
@@ -15,8 +15,9 @@ class AuthService {
           if(!val){
               return cb();
           }
+          console.log('val', val)
 
-          var zippedObj = _.zipObject(val);
+          var zippedObj = _.fromPairs(val);
 
           if(!zippedObj[authKey]){
               return cb();

@@ -34,15 +34,14 @@ class Feed extends Component {
 
     fetchFeed(){
       require('./AuthService').getAuthInfo((err, authInfo)=> {
-          var url = 'https://api.github.com/users/'
-              + authInfo.user.login
-              + '/received_events';
+          var url = 'https://api.github.com/users/' + authInfo.user.login + '/received_events';
 
           fetch(url, {
               headers: authInfo.header
           })
           .then((response)=> response.json())
-          .then((responseData)=> {
+          .then(( )=> {
+            console.log('responseData', responseData)
               var feedItems =
               responseData.filter((ev)=>
                   ev.type == 'PushEvent');
@@ -50,6 +49,9 @@ class Feed extends Component {
                   dataSource: this.state.dataSource
                       .cloneWithRows(feedItems)
               });
+          })
+          .catch(err => {
+            console.log('err', err)
           })
       });
     }
