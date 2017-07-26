@@ -1,19 +1,22 @@
 'use strict';
 
 var React = require('react');
-var ReactNative = require('react-native')
+var ReactNative = require('react-native');
 
 var {
   Text,
   View,
   Image,
   Component,
-  ListView
+  ListView,
+  ActivityIndicator
 } = ReactNative;
 
 var {
   Component,
 } = React
+
+var moment = require('moment');
 
 class Feed extends Component {
     constructor(props){
@@ -24,7 +27,8 @@ class Feed extends Component {
         });
 
         this.state = {
-            dataSource: ds.cloneWithRows(['A', 'B', 'C'])
+            dataSource: ds,
+            showProgress: true
         };
     }
 
@@ -47,7 +51,8 @@ class Feed extends Component {
                   ev.type == 'PushEvent');
               this.setState({
                   dataSource: this.state.dataSource
-                      .cloneWithRows(feedItems)
+                      .cloneWithRows(feedItems),
+                  showProgress: false
               });
           })
           .catch(err => {
@@ -57,20 +62,63 @@ class Feed extends Component {
     }
 
     renderRow(rowData){
-      console.log('rowData', rowData)
-        return <Text style={{
-            color: '#333',
-            backgroundColor: '#FFF',
-            padding: 20,
-            alignSelf: 'center'
-        }}>
-        {rowData.actor ? rowData.actor.display_login : rowData}
-        {rowData.actor ? rowData.payload.commits[0].message : rowData}
+        return (
+            <View style={{
+                  flex: 1,
+                  flexDirection: 'row',
+                  padding: 20,
+                  alignItems: 'center',
+                  borderColor: '#D7D7D7',
+                  borderBottomWidth: 1
+            }}>
+                <Image
+                    source={{uri: rowData.actor.avatar_url}}
+                    style={{
+                        height: 36,
+                        width: 36,
+                        borderRadius: 18
+                    }}
+                />
 
-        </Text>
+                <View style={{
+                    paddingLeft: 20
+                }}>
+                    <Text style={{backgroundColor: '#fff'}}>
+                        {moment(rowData.created_at).fromNow()}
+                    </Text>
+                    <Text style={{backgroundColor: '#fff'}}>
+                        {rowData.actor.login} pushed to
+                    </Text>
+                    <Text style={{backgroundColor: '#fff'}}>
+                        {rowData.payload.ref.replace('refs/heads/', '')}
+                    </Text>
+                    <Text style={{backgroundColor: '#fff'}}>
+                        at <Text style={{
+                          fontWeight: '700'
+                        }}>{rowData.repo.name}</Text>
+                    </Text>
+                </View>
+            </View>
+        );
     }
 
+    // {rowData.actor ? rowData.actor.display_login : rowData}
+    // {rowData.actor ? rowData.payload.commits[0].message : rowData}
+
     render(){
+      if(this.state.showProgress){
+        return (
+          <View style={{
+              flex: 1,
+              justifyContent: 'center'
+          }}>
+              <ActivityIndicator
+                  size="large"
+                  animating={true} />
+          </View>
+        );
+      }
+
       return (
         <View style={{
             flex: 1,
