@@ -9,7 +9,8 @@ var {
   Image,
   Component,
   StyleSheet,
-  TabBarIOS
+  TabBarIOS,
+  NavigatorIOS,
 } = ReactNative;
 
 var {
@@ -36,7 +37,14 @@ class AppContainer extends Component {
                 icon={require('./assets/Inbox.png')}
                 onPress={()=> this.setState({selectedTab: 'feed'})}
             >
-                <Feed />
+                <NavigatorIOS
+                    style={{
+                        flex: 1,
+                    }}
+                    initialRoute={{
+                        component: Feed,
+                        title: 'Feed'
+                    }} />
             </TabBarIOS.Item>
             <TabBarIOS.Item
                 title="Search"
@@ -56,14 +64,7 @@ var styles = StyleSheet.create({
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-  },
-    welcome: {
-        fontSize: 30,
-        flex: 1,
-        paddingTop: 20,
-        justifyContent: 'center',
-        alignItems: 'center'
-    }
+  }
 });
 
 module.exports = AppContainer;
