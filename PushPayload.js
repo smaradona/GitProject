@@ -26,7 +26,7 @@ class PushPayload extends Component {
         });
 
         this.state = {
-            dataSource: ds,
+            dataSource: ds
         };
     }
 
@@ -38,7 +38,22 @@ class PushPayload extends Component {
                 justifyContent: 'flex-start',
                 alignItems: 'center'
             }}>
-              <Text>Hello There</Text>
+                <Image
+                    source={{uri: this.state.pushEvent.actor.avatar_url}}
+                    style={{
+                        height: 120,
+                        width: 120,
+                        borderRadius: 60
+                    }}
+                />
+
+                <Text style={{
+                    paddingTop: 20,
+                    paddingBottom: 20,
+                    fontSize: 20
+                }}>
+                    {moment(this.state.pushEvent.created_at).fromNow()}
+                </Text>
             </View>
         );
     }
