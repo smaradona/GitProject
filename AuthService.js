@@ -7,6 +7,7 @@ const userKey = 'userKey';
 
 class AuthService {
   getAuthInfo(cb){
+
       AsyncStorage.multiGet([authKey, userKey], (err, val)=> {
           if(err){
               return cb(err);
@@ -32,6 +33,19 @@ class AuthService {
 
           return cb(null, authInfo);
       });
+  }
+
+  logout(cb) {
+    AsyncStorage.multiSet([
+        ['authKey', ''],
+        ['userKey', '']
+    ], (err)=> {
+        if(err){
+            throw err;
+        }
+
+        return cb(null, {success: true});
+    })
   }
 
   login(creds, cb){

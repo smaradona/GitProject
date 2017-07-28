@@ -39,7 +39,7 @@ class PushPayload extends Component {
                 alignItems: 'center'
             }}>
                 <Image
-                    source={{uri: this.state.pushEvent.actor.avatar_url}}
+                    source={{uri: this.props.pushEvent.actor.avatar_url}}
                     style={{
                         height: 120,
                         width: 120,
@@ -52,13 +52,11 @@ class PushPayload extends Component {
                     paddingBottom: 20,
                     fontSize: 20
                 }}>
-                    {moment(this.state.pushEvent.created_at).fromNow()}
+                    {moment(this.props.pushEvent.created_at).fromNow()}
                 </Text>
             </View>
         );
     }
 }
-
-
 
 module.exports = PushPayload;

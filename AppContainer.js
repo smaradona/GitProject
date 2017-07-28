@@ -2,6 +2,7 @@
 
 var React = require('react');
 var ReactNative = require('react-native')
+var authService = require('./AuthService');
 
 var {
   Text,
@@ -10,7 +11,7 @@ var {
   Component,
   StyleSheet,
   TabBarIOS,
-  NavigatorIOS,
+  NavigatorIOS
 } = ReactNative;
 
 var {
@@ -26,6 +27,11 @@ class AppContainer extends Component {
         this.state = {
             selectedTab: 'feed'
         }
+    }
+
+    onLogoutPress() {
+        this.props.onLogout()
+        authService.logout(() => console.log('Log out!'))
     }
 
     render(){
@@ -53,6 +59,12 @@ class AppContainer extends Component {
                 onPress={()=> this.setState({selectedTab: 'search'})}
             >
                 <Text style={styles.welcome}>Tab 2</Text>
+            </TabBarIOS.Item>
+            <TabBarIOS.Item
+                title="Logout"
+                icon={require('./assets/Search.png')}
+                onPress={() => this.onLogoutPress()}
+            >
             </TabBarIOS.Item>
         </TabBarIOS>
       );

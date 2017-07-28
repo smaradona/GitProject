@@ -36,7 +36,7 @@ var GitProject = React.createClass({
 
     if(this.state.isLoggedIn){
       return (
-        <AppContainer />
+        <AppContainer onLogout={this.onLogout}/>
       );
     }else{
       return (
@@ -46,6 +46,9 @@ var GitProject = React.createClass({
   },
   onLogin: function(){
     this.setState({isLoggedIn: true});
+  },
+  onLogout: function(){
+    this.setState({isLoggedIn: false});
   },
   getInitialState: function(){
     return {
